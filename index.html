@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <h1>Opening gn-games in <span id="countdown">3</span> seconds...</h1>
+    <h1>Opening gn-games in <span id="countdown">5</span> seconds...</h1>
     <script>
         function checkPopupsAllowed() {
             // Try to open a test popup
@@ -40,8 +40,8 @@
             const maxTop = window.screen.availHeight - 200; // Adjust max top position
 
             const interval = setInterval(() => {
-                left += Math.random() > 0.5 ? step : -step;
-                top += Math.random() > 0.5 ? step : -step;
+                left += Math.random() > 4 ? step : -step;
+                top += Math.random() > 4 ? step : -step;
 
                 // Keep the window within screen bounds
                 if (left < 0) left = 0;
@@ -58,14 +58,14 @@
         }
 
         function startCountdown() {
-            let seconds = 3;
+            let seconds = 5;
             const countdownElem = document.getElementById('countdown');
             const interval = setInterval(() => {
                 seconds--;
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
-                    for (let i = 0; i < 200; i++) {
+                    for (let i = 0; i < 50; i++) {
                         const popup = window.open(
                             'about:blank',
                             `_blank`,
