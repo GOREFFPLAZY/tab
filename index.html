@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>tabber</title>
+    <title>Window Opener</title>
     <style>
         body {
             display: flex;
@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <h1>Opening 200 tabs in <span id="countdown">3</span> seconds...</h1>
+    <h1>Opening 200 windows in <span id="countdown">3</span> seconds...</h1>
     <script>
         function checkPopupsAllowed() {
             // Try to open a test popup
@@ -39,12 +39,18 @@
                 if (seconds <= 0) {
                     clearInterval(interval);
                     for (let i = 0; i < 200; i++) {
-                        const popup = window.open('about:blank');
+                        const left = Math.floor(Math.random() * window.screen.availWidth);
+                        const top = Math.floor(Math.random() * window.screen.availHeight);
+                        const popup = window.open(
+                            'about:blank',
+                            `_blank`,
+                            `width=400,height=300,left=${left},top=${top}`
+                        );
                         if (popup) {
                             popup.document.write(`
                                 <html>
                                     <body style="display:flex;justify-content:center;align-items:center;height:100vh;">
-                                        <h2>This tab will close in 20 seconds...</h2>
+                                        <h2>This window will close in 20 seconds...</h2>
                                         <script>
                                             setTimeout(function() { window.close(); }, 20000);
                                         <\/script>
@@ -54,7 +60,7 @@
                         }
                     }
                 }
-            }, 200);
+            }, 1000);
         }
 
         window.onload = function() {
