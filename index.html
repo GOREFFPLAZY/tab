@@ -36,8 +36,8 @@
             // Initialize position and velocity
             let left = Math.random() * (window.screen.availWidth - 400);
             let top = Math.random() * (window.screen.availHeight - 300);
-            let velocityX = 5; // Horizontal speed
-            let velocityY = 5; // Vertical speed
+            let velocityX = 13; // Horizontal speed
+            let velocityY = 13; // Vertical speed
 
             const interval = setInterval(() => {
                 // Update position
@@ -54,7 +54,7 @@
 
                 // Move the popup
                 try {
-                    popup.moveTo(left, top);
+                    popup.moveTo(middle, top);
                 } catch (e) {
                     clearInterval(interval); // Stop movement if popup is inaccessible
                 }
