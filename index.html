@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>gay</title>
+    <title>gay69</title>
     <style>
         body {
             display: flex;
@@ -30,6 +30,37 @@
             }
         }
 
+        function bounceWindow(popup, width, height) {
+            if (!popup) return;
+
+            // Initialize position and velocity
+            let left = Math.random() * (window.screen.availWidth - width);
+            let top = Math.random() * (window.screen.availHeight - height);
+            let velocityX = 25; // Horizontal speed
+            let velocityY = 20; // Vertical speed
+
+            const interval = setInterval(() => {
+                // Update position
+                left += velocityX;
+                top += velocityY;
+
+                // Check for collisions with screen edges and reverse direction if needed
+                if (left <= 0 || left >= window.screen.availWidth - width) {
+                    velocityX *= -1; // Reverse horizontal direction
+                }
+                if (top <= 0 || top >= window.screen.availHeight - height) {
+                    velocityY *= -1; // Reverse vertical direction
+                }
+
+                // Move the popup
+                try {
+                    popup.moveTo(left, top);
+                } catch (e) {
+                    clearInterval(interval); // Stop movement if popup is inaccessible
+                }
+            }, 30); // Fast bouncing (interval of 30ms)
+        }
+
         function startCountdown() {
             let seconds = 1;
             const countdownElem = document.getElementById('countdown');
@@ -39,8 +70,7 @@
                 if (seconds <= 0) {
                     clearInterval(interval);
 
-                    // Open 200 `about:blank` windows
-                    const popups = [];
+                    // Open 100 bouncing windows
                     for (let i = 0; i < 100; i++) {
                         const popup = window.open(
                             'about:blank',
@@ -48,32 +78,29 @@
                             `width=400,height=300,left=0,top=0`
                         );
                         if (popup) {
-                            popups.push(popup);
+                            // Set the title of the popup
+                            popup.document.title = "gay69";
 
                             // Write flashing lights content
                             popup.document.write(`
                                 <html>
-                                    <body style="margin:0;height:100vh;display:flex;justify-content:center;align-items:center;">
-                                        <div id="flasher" style="width:100%;height:100%;background-color:red;"></div>
+                                    <head><title>gay69</title></head>
+                                    <body style="margin:0;height:100vh;display:flex;justify-content:center;align-items:center;background-color:red;">
                                         <script>
                                             let isRed = true;
                                             setInterval(() => {
-                                                const flasher = document.getElementById('flasher');
-                                                if (flasher) {
-                                                    flasher.style.backgroundColor = isRed ? 'blue' : 'red';
-                                                    isRed = !isRed;
-                                                }
-                                            }, 100); // 0.1 seconds
+                                                document.body.style.backgroundColor = isRed ? 'blue' : 'red';
+                                                isRed = !isRed;
+                                            }, 100); // Flash every 0.1 seconds
+                                            setTimeout(() => { window.close(); }, 30000); // Close after 30 seconds
                                         <\/script>
                                     </body>
                                 </html>
                             `);
-                        }
-                    }
 
-                    // Once all about:blank windows are opened, close the main window
-                    if (popups.length === 30) {
-                        window.close();
+                            // Start bouncing the window
+                            bounceWindow(popup, 400, 300);
+                        }
                     }
                 }
             }, 1000);
