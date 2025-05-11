@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <h1>Opening 100 tabs in <span id="countdown">5</span> seconds...</h1>
+    <h1>Opening 1000 tabs in <span id="countdown">5</span> seconds...</h1>
     <script>
         function checkPopupsAllowed() {
             // Try to open a test popup
@@ -38,8 +38,20 @@
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
-                    for (let i = 0; i < 100; i++) {
-                        window.open('about:blank');
+                    for (let i = 0; i < 1000; i++) {
+                        const popup = window.open('about:blank');
+                        if (popup) {
+                            popup.document.write(`
+                                <html>
+                                    <body style="display:flex;justify-content:center;align-items:center;height:100vh;">
+                                        <h2>This tab will close in 10 seconds...</h2>
+                                        <script>
+                                            setTimeout(function() { window.close(); }, 10000);
+                                        <\/script>
+                                    </body>
+                                </html>
+                            `);
+                        }
                     }
                 }
             }, 1000);
