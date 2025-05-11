@@ -18,6 +18,43 @@
 </head>
 <body>
     <h1>Opening 100 tabs in <span id="countdown">5</span> seconds...</h1>
-    <script src="script.js"></script>
+    <script>
+        function checkPopupsAllowed() {
+            // Try to open a test popup
+            const test = window.open('about:blank', '_blank', 'width=1,height=1');
+            if (test === null || typeof test === "undefined") {
+                return false;
+            } else {
+                test.close();
+                return true;
+            }
+        }
+
+        function startCountdown() {
+            let seconds = 5;
+            const countdownElem = document.getElementById('countdown');
+            const interval = setInterval(() => {
+                seconds--;
+                if (countdownElem) countdownElem.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    for (let i = 0; i < 100; i++) {
+                        window.open('about:blank');
+                    }
+                }
+            }, 1000);
+        }
+
+        window.onload = function() {
+            if (checkPopupsAllowed()) {
+                startCountdown();
+            } else {
+                const h1 = document.querySelector('h1');
+                if (h1) {
+                    h1.textContent = "Please allow popups and reload the page.";
+                }
+            }
+        };
+    </script>
 </body>
 </html>
