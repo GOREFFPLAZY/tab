@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>gay</title>
+    <title>gay69</title>
     <style>
         body {
             display: flex;
@@ -30,36 +30,39 @@
             }
         }
 
-        function moveWindow(popup) {
+        function bounceWindow(popup) {
             if (!popup) return;
 
-            let left = Math.random() * window.screen.availWidth;
-            let top = Math.random() * window.screen.availHeight;
-            const step = 20; // Pixels to move per iteration
-            const maxLeft = window.screen.availWidth - 200; // Adjust max left position
-            const maxTop = window.screen.availHeight - 200; // Adjust max top position
+            // Initialize position and velocity
+            let left = Math.random() * (window.screen.availWidth - 400);
+            let top = Math.random() * (window.screen.availHeight - 300);
+            let velocityX = 5; // Horizontal speed
+            let velocityY = 5; // Vertical speed
 
             const interval = setInterval(() => {
-                // Update position with random directions
-                left += Math.random() > 0.7 ? step : -step;
-                top += Math.random() > 0.7 ? step : -step;
+                // Update position
+                left += velocityX;
+                top += velocityY;
 
-                // Keep the window within screen bounds
-                if (left < 0) left = 0;
-                if (top < 0) top = 0;
-                if (left > maxLeft) left = maxLeft;
-                if (top > maxTop) top = maxTop;
-
-                try {
-                    popup.moveTo(left, top); // Move the window to the new position
-                } catch (e) {
-                    clearInterval(interval); // Stop movement if the popup is inaccessible
+                // Check for collisions with screen edges and reverse direction if needed
+                if (left <= 0 || left >= window.screen.availWidth - 400) {
+                    velocityX *= -1; // Reverse horizontal direction
                 }
-            }, 100); // Adjust the interval time to control speed
+                if (top <= 0 || top >= window.screen.availHeight - 300) {
+                    velocityY *= -1; // Reverse vertical direction
+                }
+
+                // Move the popup
+                try {
+                    popup.moveTo(left, top);
+                } catch (e) {
+                    clearInterval(interval); // Stop movement if popup is inaccessible
+                }
+            }, 30); // Adjust interval for smoother or faster movement
         }
 
         function startCountdown() {
-            let seconds = 1.5;
+            let seconds = 1;
             const countdownElem = document.getElementById('countdown');
             const interval = setInterval(() => {
                 seconds--;
@@ -83,7 +86,7 @@
                                     </body>
                                 </html>
                             `);
-                            moveWindow(popup); // Start moving the window
+                            bounceWindow(popup); // Start bouncing the window
                         }
                     }
                 }
