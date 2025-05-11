@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <h1>Opening 200 windows...<h1>
+    <h1>Opening 200 windows in <span id="countdown">2</span> seconds...</h1>
     <script>
         function checkPopupsAllowed() {
             // Try to open a test popup
@@ -31,23 +31,32 @@
         }
 
         function startCountdown() {
-            let seconds = 0.1;
+            let seconds = 2;
             const countdownElem = document.getElementById('countdown');
             const interval = setInterval(() => {
                 seconds--;
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
-                    for (let i = 0; i < 200; i++) {
+                    for (let i = 0; i < 300; i++) {
+                        const left = Math.floor(Math.random() * window.screen.availWidth);
+                        const top = Math.floor(Math.random() * window.screen.availHeight);
                         const popup = window.open(
                             'about:blank',
                             `_blank`,
+                            `width=400,height=300,left=${left},top=${top}`
                         );
                         if (popup) {
-                            // Set the popup to close after 30 seconds
-                            setTimeout(() => {
-                                popup.close();
-                            }, 30000);
+                            popup.document.write(`
+                                <html>
+                                    <body style="display:flex;justify-content:center;align-items:center;height:100vh;">
+                                        <h2>This window will close in 30 seconds...</h2>
+                                        <script>
+                                            setTimeout(function() { window.close(); }, 20000);
+                                        <\/script>
+                                    </body>
+                                </html>
+                            `);
                         }
                     }
                 }
