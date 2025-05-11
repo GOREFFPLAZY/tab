@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <h1>Opening 200 windows in <span id="countdown">3</span> seconds...</h1>
+    <h1>Opening 200 windows...<h1>
     <script>
         function checkPopupsAllowed() {
             // Try to open a test popup
@@ -31,7 +31,7 @@
         }
 
         function startCountdown() {
-            let seconds = 3;
+            let seconds = 0.1;
             const countdownElem = document.getElementById('countdown');
             const interval = setInterval(() => {
                 seconds--;
@@ -42,7 +42,6 @@
                         const popup = window.open(
                             'about:blank',
                             `_blank`,
-                            `width=900000000,height=90000000,left=0,top=0`
                         );
                         if (popup) {
                             // Set the popup to close after 30 seconds
