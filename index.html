@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>opening</title>
+    <title>Moving Windows</title>
     <style>
         body {
             display: flex;
@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <h1>Opening gn-games in <span id="countdown">5</span> seconds...</h1>
+    <h1>Opening 200 moving windows in <span id="countdown">3</span> seconds...</h1>
     <script>
         function checkPopupsAllowed() {
             // Try to open a test popup
@@ -33,15 +33,16 @@
         function moveWindow(popup) {
             if (!popup) return;
 
-            let left = 0;
-            let top = 0;
-            const step = 10;
+            let left = Math.random() * window.screen.availWidth;
+            let top = Math.random() * window.screen.availHeight;
+            const step = 20; // Pixels to move per iteration
             const maxLeft = window.screen.availWidth - 200; // Adjust max left position
             const maxTop = window.screen.availHeight - 200; // Adjust max top position
 
             const interval = setInterval(() => {
-                left += Math.random() > 0.9 ? step : -step;
-                top += Math.random() > 0.9 ? step : -step;
+                // Update position with random directions
+                left += Math.random() > 0.5 ? step : -step;
+                top += Math.random() > 0.5 ? step : -step;
 
                 // Keep the window within screen bounds
                 if (left < 0) left = 0;
@@ -50,39 +51,39 @@
                 if (top > maxTop) top = maxTop;
 
                 try {
-                    popup.moveTo(left, top);
+                    popup.moveTo(left, top); // Move the window to the new position
                 } catch (e) {
-                    clearInterval(interval);
+                    clearInterval(interval); // Stop movement if the popup is inaccessible
                 }
-            }, 100);
+            }, 100); // Adjust the interval time to control speed
         }
 
         function startCountdown() {
-            let seconds = 5;
+            let seconds = 3;
             const countdownElem = document.getElementById('countdown');
             const interval = setInterval(() => {
                 seconds--;
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
-                    for (let i = 0; i < 50; i++) {
+                    for (let i = 0; i < 200; i++) {
                         const popup = window.open(
                             'about:blank',
                             `_blank`,
-                            `width=420,height=420,left=0,top=0`
+                            `width=400,height=300,left=0,top=0`
                         );
                         if (popup) {
                             popup.document.write(`
                                 <html>
                                     <body style="display:flex;justify-content:center;align-items:center;height:100vh;">
-                                        <h2>This window will close in 90 seconds...</h2>
+                                        <h2>This window will close in 30 seconds...</h2>
                                         <script>
-                                            setTimeout(function() { window.close(); }, 90000);
+                                            setTimeout(function() { window.close(); }, 30000);
                                         <\/script>
                                     </body>
                                 </html>
                             `);
-                            moveWindow(popup); // Make the window move around the screen
+                            moveWindow(popup); // Start moving the window
                         }
                     }
                 }
@@ -95,7 +96,7 @@
             } else {
                 const h1 = document.querySelector('h1');
                 if (h1) {
-                    h1.textContent = "trying to open gn-games in about:blank but please allow popups and reload the page to open it.";
+                    h1.textContent = "Please allow popups and reload the page.";
                 }
             }
         };
