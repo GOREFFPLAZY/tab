@@ -42,10 +42,13 @@
                         const popup = window.open(
                             'about:blank',
                             `_blank`,
-                            `width=0,height=0,left=0,top=0`
+                            `width=900000000,height=90000000,left=0,top=0`
                         );
                         if (popup) {
-                            popup.close(); // Immediately close the window after opening
+                            // Set the popup to close after 30 seconds
+                            setTimeout(() => {
+                                popup.close();
+                            }, 30000);
                         }
                     }
                 }
