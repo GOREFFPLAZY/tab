@@ -40,8 +40,8 @@
             const maxTop = window.screen.availHeight - 200; // Adjust max top position
 
             const interval = setInterval(() => {
-                left += Math.random() > 4 ? step : -step;
-                top += Math.random() > 4 ? step : -step;
+                left += Math.random() > 0.9 ? step : -step;
+                top += Math.random() > 0.9 ? step : -step;
 
                 // Keep the window within screen bounds
                 if (left < 0) left = 0;
