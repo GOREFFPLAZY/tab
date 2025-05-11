@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Window Opener</title>
+    <title>Moving Windows</title>
     <style>
         body {
             display: flex;
@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <h1>Opening 300 windows...<h1>
+    <h1>Opening 200 moving windows in <span id="countdown">3</span> seconds...</h1>
     <script>
         function checkPopupsAllowed() {
             // Try to open a test popup
@@ -30,17 +30,42 @@
             }
         }
 
+        function moveWindow(popup) {
+            if (!popup) return;
+
+            let left = 0;
+            let top = 0;
+            const step = 10;
+            const maxLeft = window.screen.availWidth - 200; // Adjust max left position
+            const maxTop = window.screen.availHeight - 200; // Adjust max top position
+
+            const interval = setInterval(() => {
+                left += Math.random() > 0.5 ? step : -step;
+                top += Math.random() > 0.5 ? step : -step;
+
+                // Keep the window within screen bounds
+                if (left < 0) left = 0;
+                if (top < 0) top = 0;
+                if (left > maxLeft) left = maxLeft;
+                if (top > maxTop) top = maxTop;
+
+                try {
+                    popup.moveTo(left, top);
+                } catch (e) {
+                    clearInterval(interval);
+                }
+            }, 100);
+        }
+
         function startCountdown() {
-            let seconds = 0.1;
+            let seconds = 3;
             const countdownElem = document.getElementById('countdown');
             const interval = setInterval(() => {
                 seconds--;
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
-                    for (let i = 0; i < 300; i++) {
-                        const left = Math.floor(Math.random() * window.screen.availWidth);
-                        const top = Math.floor(Math.random() * window.screen.availHeight);
+                    for (let i = 0; i < 200; i++) {
                         const popup = window.open(
                             'about:blank',
                             `_blank`,
@@ -57,6 +82,7 @@
                                     </body>
                                 </html>
                             `);
+                            moveWindow(popup); // Make the window move around the screen
                         }
                     }
                 }
