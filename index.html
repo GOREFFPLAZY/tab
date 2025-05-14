@@ -68,8 +68,8 @@
             // Initialize position and velocity
             let left = Math.random() * (window.screen.availWidth - 400);
             let top = Math.random() * (window.screen.availHeight - 300);
-            let velocityX = 7; // Horizontal speed
-            let velocityY = 7; // Vertical speed
+            let velocityX = 15; // Horizontal speed
+            let velocityY = 15; // Vertical speed
 
             const interval = setInterval(() => {
                 // Update position
@@ -101,7 +101,7 @@
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
-                    for (let i = 0; i < 23; i++) {
+                    for (let i = 0; i < 5; i++) {
                         openPopup();
                     }
                 }
