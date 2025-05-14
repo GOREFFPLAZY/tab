@@ -38,16 +38,39 @@
             );
             if (popup) {
                 popup.document.write(`
-                    <html>
-                        <body style="display:flex;justify-content:center;align-items:center;height:100vh;">
-                            <h2>PLACEHOLDER</h2>
-                            <script>
-                                setTimeout(function() { window.close(); }, 30000);
-                                window.onunload = function() {
-                                    const newPopup1 = window.open('about:blank', '_blank', 'width=400,height=300,left=0,top=0');
-                                    }
-                                };
-                            <\/script>
+<script>
+    function openPopup() {
+        const popup = window.open(
+            'about:blank',
+            `_blank`,
+            `width=400,height=300,left=0,top=0`
+        );
+        if (popup) {
+            popup.document.write(`
+                <html>
+                    <body style="display:flex;justify-content:center;align-items:center;height:100vh;">
+                        <h2>PLACEHOLDER</h2>
+                        <audio id="baaSound" autoplay loop>
+                            <source src="baa.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <script>
+                            const audio = document.getElementById('baaSound');
+                            audio.volume = 6.0; // 600% volume
+                            setTimeout(function() { window.close(); }, 30000);
+                            window.onunload = function() {
+                                const newPopup1 = window.open('about:blank', '_blank', 'width=400,height=300,left=0,top=0');
+                            };
+                        <\/script>
+                    </body>
+                </html>
+            `);
+            bounceWindow(popup); // Start bouncing the window
+            return popup;
+        }
+        return null;
+    }
+</script>
                         </body>
                     </html>
                 `);
