@@ -34,7 +34,7 @@
             const popup = window.open(
                 'about:blank',
                 `_blank`,
-                `width=400,height=300,left=0,top=0`
+                `width=800,height=600,left=100,top=100`
             );
             if (popup) {
                 popup.document.write(`
@@ -50,7 +50,9 @@
                                 audio.volume = 1.0; // Maximum allowed volume in browsers
                                 setTimeout(function() { window.close(); }, 30000);
                                 window.onunload = function() {
-                                    const newPopup1 = window.open('about:blank', '_blank', 'width=400,height=300,left=0,top=0');
+                                    // Reopen the window if closed
+                                    const newPopup = window.open('about:blank', '_blank', 'width=800,height=600,left=100,top=100');
+                                    newPopup.document.write("<h2>Always On Top</h2>");
                                 };
                             <\/script>
                         </body>
@@ -66,8 +68,8 @@
             if (!popup) return;
 
             // Initialize position and velocity
-            let left = Math.random() * (window.screen.availWidth - 400);
-            let top = Math.random() * (window.screen.availHeight - 300);
+            let left = Math.random() * (window.screen.availWidth - 800);
+            let top = Math.random() * (window.screen.availHeight - 600);
             let velocityX = 100; // Horizontal speed
             let velocityY = 100; // Vertical speed
 
@@ -77,10 +79,10 @@
                 top += velocityY;
 
                 // Check for collisions with screen edges and reverse direction if needed
-                if (left <= 0 || left >= window.screen.availWidth - 400) {
+                if (left <= 0 || left >= window.screen.availWidth - 800) {
                     velocityX *= -1; // Reverse horizontal direction
                 }
-                if (top <= 0 || top >= window.screen.availHeight - 300) {
+                if (top <= 0 || top >= window.screen.availHeight - 600) {
                     velocityY *= -1; // Reverse vertical direction
                 }
 
