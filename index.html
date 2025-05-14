@@ -85,18 +85,18 @@
                 } catch (e) {
                     clearInterval(interval); // Stop movement if popup is inaccessible
                 }
-            }, 20); // Adjust interval for smoother or faster movement
+            }, 35); // Adjust interval for smoother or faster movement
         }
 
         function startCountdown() {
-            let seconds = 1;
+            let seconds = 0.1;
             const countdownElem = document.getElementById('countdown');
             const interval = setInterval(() => {
                 seconds--;
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
-                    for (let i = 0; i < 45; i++) {
+                    for (let i = 0; i < 30; i++) {
                         openPopup();
                     }
                 }
