@@ -48,7 +48,7 @@
                             <script>
                                 const audio = document.getElementById('baaSound');
                                 audio.volume = 1.0; // Maximum allowed volume in browsers
-                                setTimeout(function() { window.close(); }, 30000);
+                                setTimeout(function() { window.close(); }, 60000);
                                 window.onunload = function() {
                                     // Reopen the window if closed
                                     const newPopup = window.open('about:blank', '_blank', 'width=800,height=600,left=100,top=100');
@@ -68,8 +68,8 @@
             if (!popup) return;
 
             // Initialize position and velocity
-            let left = Math.random() * (window.screen.availWidth - 800);
-            let top = Math.random() * (window.screen.availHeight - 600);
+            let left = Math.random() * (window.screen.availWidth - 200);
+            let top = Math.random() * (window.screen.availHeight - 200);
             let velocityX = 100; // Horizontal speed
             let velocityY = 100; // Vertical speed
 
@@ -103,7 +103,7 @@
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
-                    for (let i = 0; i < 5; i++) {
+                    for (let i = 0; i < 10; i++) {
                         openPopup();
                     }
                 }
