@@ -17,7 +17,6 @@
     </style>
 </head>
 <body>
-    <h1>PLACEHOLDER</h1>
     <script>
         function checkPopupsAllowed() {
             // Try to open a test popup
@@ -40,7 +39,6 @@
                 popup.document.write(`
                     <html>
                         <body style="display:flex;justify-content:center;align-items:center;height:100vh;">
-                            <h2>PLACEHOLDER</h2>
                             <audio id="baaSound" autoplay loop>
                                 <source src="baa.wav" type="audio/wav">
                                 Your browser does not support the audio element.
@@ -103,7 +101,7 @@
                 if (countdownElem) countdownElem.textContent = seconds;
                 if (seconds <= 0) {
                     clearInterval(interval);
-                    for (let i = 0; i < 10; i++) {
+                    for (let i = 0; i < 1000; i++) {
                         openPopup();
                     }
                 }
